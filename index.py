@@ -1,10 +1,23 @@
 from fastapi import FastAPI, HTTPException
 import requests
 
-app = FastAPI()
+app = FastAPI(
+    title="Shopify API",
+    description="API to interact with Shopify",
+    version="1.0.0",
+    servers=[
+        {
+            "url": "https://dashboard-shopify-backend.onrender.com",
+            "description": "Shopify API"
+        }
+        
+    ]
+)
 
-@app.get("/shopify/orders")
+@app.get("/shopify/orders",response_description="The URL to fetch orders from shopify")
 async def get_shopify_orders():
+    """Fetches and return shopify order from the specifeid URL
+    This endpoint make a fetch call to the url and get the orders from the shopify which is then converted to json and return as a json"""
     url = "https://b519f5-ff.myshopify.com/admin/api/2024-07/orders.json"
     headers = {
         "X-Shopify-Access-Token": "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",
